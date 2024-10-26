@@ -13,10 +13,11 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
-import { formSchema } from "./LoginForm.form"
+import { formSchema } from "./RegisterForm.form"
 import { FormError } from "../../components/FormError"
+import { Repeat } from "lucide-react"
 
-export function LoginForm() {
+export function RegisterForm() {
     const [error, setError] = useState<string | undefined>("");
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -24,6 +25,7 @@ export function LoginForm() {
         defaultValues: {
         email: "",
         password: "",
+        RepeatPassword: "",
         },
     })
 
@@ -59,8 +61,20 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="repeatPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input placeholder="Repetir Contraseña" {...field} type="password" className="h-14 text-white"/>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormError message={error} />
-            <Button type="submit" className="w-full bg-[#e50914]">Iniciar sesión</Button>
+            <Button type="submit" className="w-full bg-[#e50914]">Registrarse</Button>
           </form>
         </Form>
       )

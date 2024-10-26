@@ -7,4 +7,8 @@ export const formSchema = z.object({
     password: z.string().min(2 , {
         message: "Contraseña muy corta",}
     ),
-  });
+    repeatPassword: z.string(),
+    }).refine((data) => data.password === data.repeatPassword, {
+        message: "Las contraseñas no coinciden",
+        path: ["repeatPassword"],
+    });
