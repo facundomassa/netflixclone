@@ -2,7 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-
+import { z } from "zod"
+import axios from "axios"
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -15,23 +17,38 @@ import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { formSchema } from "./RegisterForm.form"
 import { FormError } from "../../components/FormError"
-import { Repeat } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export function RegisterForm() {
+  const router = useRouter();
+
     const [error, setError] = useState<string | undefined>("");
+    const { toast } = useToast();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
         email: "",
         password: "",
-        RepeatPassword: "",
+        repeatPassword: "",
         },
     })
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        // TODO: put set error
-        console.log(values)
+    const onSubmit = async(values: z.infer<typeof formSchema>) => {
+      try{
+        await axios.post("/api/auth/register", values)
+        toast({
+          title: "Usuario registrado correctamente",
+        })
+        router.push("/profiles")
+      }
+      catch(error){
+        console.log(error);
+        toast({
+          title: "Hubo un error al registrar al usuario",
+          variant: "destructive",
+        })
+      }
     }
 
     return (
@@ -78,4 +95,8 @@ export function RegisterForm() {
           </form>
         </Form>
       )
+}
+
+function toast(arg0: { title: string; description: string }) {
+  throw new Error("Function not implemented.")
 }
