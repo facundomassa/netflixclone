@@ -2,7 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-
+import { z } from "zod"
+import axios from "axios"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -15,7 +16,6 @@ import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { formSchema } from "./RegisterForm.form"
 import { FormError } from "../../components/FormError"
-import { Repeat } from "lucide-react"
 
 export function RegisterForm() {
     const [error, setError] = useState<string | undefined>("");
@@ -23,15 +23,19 @@ export function RegisterForm() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-        email: "",
         password: "",
-        RepeatPassword: "",
+        repeatPassword: "",
         },
     })
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        // TODO: put set error
-        console.log(values)
+    const onSubmit = async(values: z.infer<typeof formSchema>) => {
+        try{
+          await axios.post("/api/auth/register", values)
+          
+        }
+        catch(error){
+          console.log(error);
+        }
     }
 
     return (
