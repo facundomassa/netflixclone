@@ -5,5 +5,5 @@ export const signInSchema = object({
     .min(2, 'Email must be at least 2 characters')
     .email('Invalid email'),
     password: string({required_error: "Password is required"})
-    .min(2, 'Password is required'),
+    .min(1, 'Password is required'),
 });

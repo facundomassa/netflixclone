@@ -3,12 +3,11 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Terms } from "../components/Terms/Terms";
 import { LoginForm } from "./LoginForm";
 
-export default function Login() {
+export default async function Login() {
     return (
         <div>
             <p className="text-3xl font-bold text-left mb-7">Iniciar sesion</p>
             <LoginForm />
-
             <div className="mt-5 text-center">
                 <Link href="/" className="hover:underline hover:opacity-70">
                     ¿Has olvidado tu contraseña?

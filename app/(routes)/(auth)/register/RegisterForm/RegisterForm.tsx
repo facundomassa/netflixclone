@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import axios from "axios"
-import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -14,16 +13,12 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
 import { formSchema } from "./RegisterForm.form"
-import { FormError } from "../../components/FormError"
+import { toast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 
 export function RegisterForm() {
   const router = useRouter();
-
-    const [error, setError] = useState<string | undefined>("");
-    const { toast } = useToast();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -90,13 +85,8 @@ export function RegisterForm() {
                 </FormItem>
               )}
             />
-            <FormError message={error} />
             <Button type="submit" className="w-full bg-[#e50914]">Registrarse</Button>
           </form>
         </Form>
       )
-}
-
-function toast(arg0: { title: string; description: string }) {
-  throw new Error("Function not implemented.")
 }
