@@ -1,8 +1,24 @@
-export function Profiles() {
+import { Button } from "@/components/ui/button";
+import { ProfileProps } from "./Profiles.type";
+import { AddProfile } from "../../AddProfile";
+
+export function Profiles(props : ProfileProps) {
+    const {users} = props
+    console.log({users});
+
     return (
-        <div className="h-full flex flec-col justify-center items-center bg-zinc-900">
-            <div>
-                <h1 className="text-5xl mb-8">¿Quien eres? Elige tu perfil</h1>
+        <div>
+            <div className="flex gap-7">
+                <p>Usuarios de perfiles...</p>
+                <AddProfile />
+            </div>
+            <div className="mt-16 flex intems-center justify-center">
+                <Button 
+                variant="outline"
+                size="lg"
+                className="text-gray-500 border-gray-500 hover:bg-gray-700 hover:text-white"
+                // onClick={() => console.log("click")}
+                >Administrar perfiles</Button>
             </div>
         </div>
     );
